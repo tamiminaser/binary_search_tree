@@ -32,6 +32,21 @@ class BinarySearchTree:
         else:
             print('Double value is not allowed.')
 
+    def find(self, value):
+        if self.root == None:
+            return False
+        else:
+            return self._find(self.root, value)
+    
+    def _find(self, n, value):
+        if n.value == value:
+            return True
+        elif value > n.value and n.right_child != None:
+            return self._find(n.right_child, value)
+        elif value < n.value and n.left_child != None:
+            return self._find(n.left_child, value)
+        return False
+
     def height(self):
         if self.root == None:
             return -1
@@ -126,7 +141,8 @@ if __name__ == '__main__':
     print(bst.sort())
     print(bst.min_value())
     print('-'*10)
-    print('Height so far:', bst.height())
+    print('Height:', bst.height())
     print('-'*10)
     bst.delete(12)
     print(bst.sort())
+    print(bst.find(2))
