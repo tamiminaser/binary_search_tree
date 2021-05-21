@@ -11,10 +11,14 @@ class BinarySearchTree:
         self.root = None
     
     def insert(self, value):
-        if self.root == None:
-            self.root = Node(value)
-        else:
-            self._insert(self.root, value)
+        if isinstance(value, int):
+            if self.root == None:
+                self.root = Node(value)
+            else:
+                self._insert(self.root, value)
+        elif isinstance(value, list):
+            for v in value:
+                self.insert(v)
     
     def _insert(self, current_node, value):
         if value < current_node.value:
@@ -86,14 +90,18 @@ class BinarySearchTree:
         if n == None:
             n = self.root
         sorted = self.sort(n)
-        if len(sorted) > 1:
+        if len(sorted) > 0:
             return sorted[0]
         else:
             return None
 
     def delete(self, value):
-        if self.root != None:
-            self._delete(self.root, value)
+        if isinstance(value, int):
+            if self.root != None:
+                self._delete(self.root, value)
+        elif isinstance(value, list):
+            for v in value:
+                self.delete(v)        
 
     def _delete(self, current_node, value):
         if current_node.value == value:
@@ -124,25 +132,26 @@ class BinarySearchTree:
 
 if __name__ == '__main__':
     bst = BinarySearchTree()
+    
+    # First we insert some values to the tree
+    # We can insert values as integer or a list of integers
     bst.insert(9)
     bst.insert(12)
-    bst.insert(7)
-    bst.insert(2)
-    bst.insert(21)
-    bst.insert(10)
-    bst.insert(4)
-    bst.insert(1)
-    bst.insert(13)
-    bst.insert(24)
-    bst.insert(23)
-    bst.insert(28)
-    bst.insert(17)
-    bst.insert(14)
-    print(bst.sort())
-    print(bst.min_value())
-    print('-'*10)
+    bst.insert([7, 2, 21, 10, 4, 1, 13, 24, 23, 28, 17, 14])
+
+    # sort() method returns a sorted list of values    
+    print('Sorted:', bst.sort())
+    
+    # height() method returns the height of the tree
     print('Height:', bst.height())
-    print('-'*10)
-    bst.delete(12)
+    
+    # find() method return True if it finds the value in the tree
+    print(bst.find(2))
+
+    # delete() method removes values from the tree
+    bst.delete(28)
+    bst.delete([2, 21])
+    
+    # Two tests to make sure deleting was done properly
     print(bst.sort())
     print(bst.find(2))
