@@ -63,20 +63,55 @@ class BinarySearchTree:
         else:
             return max(self._height(n.left_child)+1, self._height(n.right_child)+1)
 
-    def sort(self, n=None):
+    def __len__(self):
+        if self.root == None:
+            return 0
+        return len(self.inorder())    
+
+    def inorder(self, n=None):
         if n == None:
             n = self.root
-        self._sorted = []
+        self._inorder_lst = []
         if n != None:
-            self._sort(n)
-            return self._sorted
+            self._inorder(n)
+            return self._inorder_lst
     
-    def _sort(self, current_node):
+    def _inorder(self, current_node):
         if current_node != None:
-            self._sort(current_node.left_child)
-            self._sorted.append(current_node.value)
-            self._sort(current_node.right_child)
-        return self._sorted
+            self._inorder(current_node.left_child)
+            self._inorder_lst.append(current_node.value)
+            self._inorder(current_node.right_child)
+        return self._inorder_lst
+
+    def preorder(self, n=None):
+        if n == None:
+            n = self.root
+        self._preorder_lst = []
+        if n != None:
+            self._preorder(n)
+            return self._preorder_lst
+    
+    def _preorder(self, current_node):
+        if current_node != None:
+            self._preorder_lst.append(current_node.value)
+            self._preorder(current_node.left_child)
+            self._preorder(current_node.right_child)
+        return self._inorder_lst
+
+    def postorder(self, n=None):
+        if n == None:
+            n = self.root
+        self._postorder_lst = []
+        if n != None:
+            self._postorder(n)
+            return self._postorder_lst
+    
+    def _postorder(self, current_node):
+        if current_node != None:
+            self._postorder(current_node.left_child)
+            self._postorder(current_node.right_child)
+            self._postorder_lst.append(current_node.value)
+        return self._postorder_lst
 
     def number_of_children(self, n):
         no_children = 0
@@ -89,7 +124,7 @@ class BinarySearchTree:
     def min_value(self, n=None):
         if n == None:
             n = self.root
-        sorted = self.sort(n)
+        sorted = self.inorder(n)
         if len(sorted) > 0:
             return sorted[0]
         else:
@@ -139,11 +174,16 @@ if __name__ == '__main__':
     bst.insert(12)
     bst.insert([7, 2, 21, 10, 4, 1, 13, 24, 23, 28, 17, 14])
 
-    # sort() method returns a sorted list of values    
-    print('Sorted:', bst.sort())
+    # inorder() method returns a sorted list of values    
+    print('Inorder:', bst.inorder())
+    print('Pre-order:', bst.preorder())
+    print('Post-order:', bst.postorder())
     
     # height() method returns the height of the tree
     print('Height:', bst.height())
+
+
+    print('Length:', len(bst))
     
     # find() method return True if it finds the value in the tree
     print(bst.find(2))
@@ -153,5 +193,5 @@ if __name__ == '__main__':
     bst.delete([2, 21])
     
     # Two tests to make sure deleting was done properly
-    print(bst.sort())
+    print(bst.inorder())
     print(bst.find(2))
