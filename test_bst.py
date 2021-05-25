@@ -70,4 +70,4 @@ def test_delete_find2():
     bst.insert(9)
     bst.insert([17, 3, 18, 10, 12, 5, 4])
     bst.delete([18, 10])
-    assert bst.find(18) == False and bst.find(10) == False
+    assert bst.find([18, 10, 12]) == [False, False, True]

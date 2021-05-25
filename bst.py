@@ -37,10 +37,17 @@ class BinarySearchTree:
             print('Double value is not allowed.')
 
     def find(self, value):
-        if self.root == None:
-            return False
-        else:
-            return self._find(self.root, value)
+        if isinstance(value, int):
+            if self.root == None:
+                return False
+            else:
+                return self._find(self.root, value)
+        elif isinstance(value, list):
+            list_find = []
+            for v in value:
+                list_find.append(self.find(v))
+            return list_find
+
     
     def _find(self, n, value):
         if n.value == value:
@@ -174,6 +181,9 @@ if __name__ == '__main__':
     bst.insert(12)
     bst.insert([7, 2, 21, 10, 4, 1, 13, 24, 23, 28, 17, 14])
 
+    #
+    print('Find([2, 21]):', bst.find([2, 21]))
+
     # inorder() method returns a sorted list of values    
     print('Inorder:', bst.inorder())
     print('Pre-order:', bst.preorder())
@@ -195,3 +205,4 @@ if __name__ == '__main__':
     # Two tests to make sure deleting was done properly
     print(bst.inorder())
     print(bst.find(2))
+
